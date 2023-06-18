@@ -1,0 +1,2 @@
+DNI	Nombre 	Apellido	Domicilio	Materia1	Materia1-Nota1	Materia1-Nota2	Materia1-Promedio	Materia1-Situacion	Materia2	Materia2-Nota2	Materia1-Nota2	Materia2-Promedio	Materia2-Situacion
+456321	Jos�	Lopez	Junion 1425	Matematica I	8	2	5	No Regular	Fundamentos BD	8	10	9	Regular
