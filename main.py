@@ -1,9 +1,260 @@
 # 1. Almacenar los datos de los alumnos en una estructura de datos de manera tal que permita:
 alumnos = []  # Creo una lista para agregar cada alumno (diccionario).
 
-def leer_archivo(ruta):
-    """Función que lee un archivo"""
+
+def mostrar_alumnos(alumnos):
+    """Función que muestra todos los alumnos registrados"""
+    print("\tLISTA DE ALUMNOS REGISTRADOS")
+    for indice, alumno in enumerate(alumnos, start=1):
+        dni = alumno.get("DNI")
+        nombre = alumno.get("Nombre")
+        apellido = alumno.get("Apellido")
+        domicilio = alumno.get("Domicilio")
+        materia1 = alumno.get("Materia1")
+        m1_nota1 = alumno.get("Materia1-Nota1")
+        m1_nota2 = alumno.get("Materia1Nota2")
+        m1_promedio = alumno.get("Materia1-Promedio")
+        m1_situacion = alumno.get("Materia1-Situacion")
+        materia2 = alumno.get("Materia2")
+        m2_nota1 = alumno.get("Materia2-Nota1")
+        m2_nota2 = alumno.get("Materia2Nota2")
+        m2_promedio = alumno.get("Materia2-Promedio")
+        m2_situacion = alumno.get("Materia2-Situacion")
+        print(f"\tAlumno N° {indice}: DNI {dni}. {apellido}, {nombre}")
+        print(f"Domicilio: {domicilio}")
+        print(f"Materia {materia1}, nota 1: {m1_nota1} y nota 2: {m1_nota2}. Promedio: {m1_promedio}. Situación:{m1_situacion}")
+        print(f"Materia {materia2}, nota 1: {m2_nota1} y nota 2: {m2_nota2}. Promedio: {m2_promedio}. Situación:{m2_situacion}")
+
+
+#  a. Agregar alumnos
+def agrega_alumno():
+    """Función que registra a un alumno con sus datos personales básicos a un diccionario:
+    DNI, nombre, apellido y domicilio. 
+    Se agregan con valores por defecto las claves restantes"""
+    print("\n\tREGISTRO de ALUMNO")
+    alumno = {
+        "DNI": 000,
+        "Nombre": "",
+        "Apellido": "",
+        "Domicilio": "",
+        "Materia1": "",
+        "Materia1-Nota1": 0.0,
+        "Materia1-Nota2": 0.0,
+        "Materia1-Promedio": 0.0,
+        "Materia1-Situacion": "",
+        "Materia2": "",
+        "Materia2-Nota1": 0.0,
+        "Materia2-Nota2": 0.0,
+        "Materia2-Promedio": 0.0,
+        "Materia2-Situacion": "",
+    }
     try:
+        dni = int(input("Ingrese DNI: "))
+        nombre = input("Nombre: ")
+        apellido = input("Apellido: ")
+        domicilio = input("Domicilio: ")
+
+        alumno["DNI"] = dni
+        alumno["Nombre"] = nombre
+        alumno["Apellido"] = apellido
+        alumno["Domicilio"] = domicilio
+        
+        alumnos.append(alumno)
+        return f"{apellido}, {nombre}. DNI {dni}. Con domicilio {domicilio}, cargado exitosamente!"
+    except ValueError:
+        print("Revise lo que está intentando ingresar. Cochino!")
+
+
+#  b. Modificar datos Personales de los alumnos
+def modifica_alumno(alumnos):
+    """Función que modifica los datos de un alumno"""
+    print("\n\tMODIFICAR ALUMNO")
+    try:
+        dni = int(input("DNI del alumno: "))
+        for alumno in alumnos:
+            for valor in alumno.values():
+                if valor == dni:
+                    print("\n\tSe modificarán los datos de", alumno.get("DNI"))
+                    dato = input(
+                        """Ingrese inicial de lo que desea modificar
+                    N - Nombre
+                    A - Apellido
+                    D - Domicilio"""
+                    )
+                    if dato == "N":
+                        nombre = input("Ingrese el nuevo nombre: ")
+                        alumno["Nombre"] = nombre
+                    elif dato == "A":
+                        apellido = input("Ingrese el nuevo apellido: ")
+                        alumno["Apellido"] = apellido
+                    elif dato == "D":
+                        domicilio = input("Ingrese el nuevo domicilio:")
+                        alumno["Domicilio"] = domicilio
+                    else:
+                        print("¡Esa opción no existe!")
+                    return f"El alumno con DNI {dni}, fue modificado con éxito!"
+                elif not dni in alumno.values():
+                    print("El DNI que busca no está registrado")
+    except ValueError:
+        print("Por favor, verifique su ingreso.")
+
+
+#  c. Eliminar alumnos
+def elimina_alumno(alumnos):
+    """Función que elimina un alumno de una lista en base a su DNI"""
+    print("\n\tELIMINAR ALUMNO")
+    try:
+        dni = int(input("DNI del alumno que quiere eliminar: "))
+        for alumno in alumnos:  # Recorro la lista de diccionarios
+            for valor in alumno.values():  # Recorro cada diccionario por sus valores (no claves)
+                if valor == dni:
+                    print("Eliminando...")
+                    alumnos.remove(alumno)
+                    return f"El alumno con DNI {dni}, fue eliminado del registro exitosamente."
+                elif not dni in alumno.values():
+                    print("El DNI que busca no está registrado")
+    except ValueError:
+        print("VALOR INCORRECTO. Por favor, verifique su ingreso.")
+
+
+#   2. Almacenar datos de la cursada de materias para cada alumno a fin de:
+#   a. Cargar materias
+def carga_materia(alumnos):
+    """Función que agrega una materia nueva para un alumno"""
+    print("\n\tCARGA DE MATERIAS POR ALUMNO")
+    try:
+        dni = int(input("DNI del alumno: "))
+        for alumno in alumnos:
+            for valor in alumno.values():
+                if valor == dni:
+                    print("\n\tMaterias del alumno con DNI", alumno.get("DNI"))
+                    nombre1 = input("Nombre de la materia 1: ")
+                    nombre2 = input("Nombre de la materia 2: ")
+                    alumno["Materia1"] = nombre1
+                    alumno["Materia2"] = nombre2
+                    return alumno
+                elif not dni in alumno.values():
+                    print("El DNI que busca no está registrado")
+    except ValueError:
+        print("VALOR INCORRECTO. Verifique su ingreso")
+
+
+#   b. Cargar notas por materia
+#   d. Calcular el promedio de notas por materia
+#   e. Establecer la situación del alumno por materia (Regular/ No regular)
+def carga_notas(alumnos):
+    """Función que carga notas por materia, en base al DNI del alumno"""
+    print("\tCARGA DE NOTAS POR MATERIA")
+    try:
+        dni = int(input("DNI del alumno: "))
+        for alumno in alumnos:
+            for valor in alumno.values():
+                if valor == dni:
+                    print("\n\tCargando notas para alumno con DNI", dni)
+                    print("* Notas de", alumno.get("Materia1"))
+                    materia1_nota1 = float(input("Ingresa 1ra nota: "))
+                    materia1_nota2 = float(input("Ingresa 2da nota: "))
+                    if materia1_nota1 < 4.0 or materia1_nota2 < 4.0:
+                        alumno["Materia1-Situacion"] = "No Regular"
+                    else:
+                        alumno["Materia1-Situacion"] = "Regular"
+                    alumno["Materia1-Nota1"] = materia1_nota1
+                    alumno["Materia1-Nota2"] = materia1_nota2
+                    materia1_promedio = round((materia1_nota1 + materia1_nota2) / 2, 2)
+                    alumno["Materia1-Promedio"] = materia1_promedio
+                    print()
+                    print("* Notas de", alumno.get("Materia2"))
+                    materia2_nota1 = float(input("Ingresa 1ra nota: "))
+                    materia2_nota2 = float(input("Ingresa 2da nota: "))
+                    if materia2_nota1 < 4.0 or materia2_nota2 < 4.0:
+                        alumno["Materia2-Situacion"] = "No Regular"
+                    else:
+                        alumno["Materia2-Situacion"] = "Regular"
+                    alumno["Materia2-Nota1"] = materia2_nota1
+                    alumno["Materia2-Nota2"] = materia2_nota2
+                    materia2_promedio = round((materia2_nota1 + materia2_nota2) / 2, 2)
+                    alumno["Materia2-Promedio"] = materia2_promedio
+                    return alumno
+                elif not dni in alumno.values():
+                    print("El DNI que busca no está registrado")
+    except ValueError:
+        print("Valor incorrecto. Verifique su ingreso")
+
+
+#   c. Modificar notas por materia
+def modifica_notas(alumnos):
+    """Función que modifica las notas por materia"""
+    print("\tMODIFICAR NOTAS POR MATERIA")
+    try:
+        dni = int(input("Ingrese el DNI del alumno: "))
+        for alumno in alumnos:
+            for value in alumno.values():
+                if value == dni:
+                    print("\n* ¿Qué materia desea modificar? Ingrese 1 ó 2")
+                    print("1->", alumno.get("Materia1"))
+                    print("2->", alumno.get("Materia2"))
+                    numero_materia = int(input("Su elección: "))
+                    if (
+                        numero_materia == 1
+                    ):  # Corresponde a {"Materia1-Notas" = [0.0, 0.0]}
+                        print(
+                            "¿Qué notas de la materia",
+                            alumno.get("Materia1"),
+                            "desea modificar?",
+                        )
+                        print("1-> 1ra nota:", alumno.get("Materia1-Nota1"))
+                        print("2-> 2da nota:", alumno.get("Materia2-Nota2"))
+                        numero_nota = int(input("Su elección: "))
+                        if numero_nota == 1:
+                            alumno["Materia1-Nota1"] = float(input("Ingrese la nueva nota 1: "))
+                        elif numero_nota == 2:
+                            alumno["Materia1-Nota2"] = float(input("Ingrese la nueva nota 2: "))
+                        else:
+                            print("Número fuera de rango!")
+                        nota1 = alumno.get("Materia1-Nota1")
+                        nota2 = alumno.get("Materia1-Nota2")
+                        if nota1 < 4.0 or nota2 < 4.0:
+                            alumno["Materia1-Situacion"] = "No Regular"
+                        else:
+                            alumno["Materia1-Situacion"] = "Regular"
+                        promedio = round((nota1 + nota2)/ 2, 2)
+                        alumno["Materia1-Promedio"] = promedio
+                    elif numero_materia == 2:  # {"Materia2-Notas" = [0.0, 0.0]}
+                        print(
+                            "¿Qué notas de la materia",
+                            alumno.get("Materia2"),
+                            "desea modificar?",
+                        )
+                        print("1-> Para 1ra nota\n2-> Para 2da nota")
+                        numero_nota = int(input("Su elección: "))
+                        if numero_nota == 1:
+                            alumno["Materia2-Nota1"] = float(input("Ingrese la nueva nota 1: "))
+                        elif numero_nota == 2:
+                            alumno["Materia2-Notas"] = float(input("Ingrese la nueva nota 2: "))
+                        else:
+                            print("Número fuera de rango!")
+                        nota1 = alumno.get("Materia2-Nota1")
+                        nota2 = alumno.get("Materia2-Nota2")
+                        if nota1 < 4.0 or nota2 < 4.0:
+                            alumno["Materia2-Situacion"] = "No Regular"
+                        else:
+                            alumno["Materia2-Situacion"] = "Regular"
+                        promedio = round((nota1 + nota2) / 2, 2)
+                        alumno["Materia2-Promedio"] = promedio
+                    else:
+                        print("Número fuera de rango!")
+                    return alumno
+                elif not dni in alumno.values():
+                    print("El DNI que busca no está registrado")
+    except ValueError:
+        print("Valor incorrecto. Verifique su ingreso.")
+
+
+# Leer el contenido del archivo Alumnos.txt
+def leer_archivo(ruta):
+    """Función que lee el archivo Alumnos.txt"""
+    try:
+        print("\n\tCONTENIDO DEL ARCHIVO", ruta)
         archivo = open(ruta, "r")
         for line in archivo:
             print(line)
@@ -12,274 +263,179 @@ def leer_archivo(ruta):
         print("No existe el archivo o directorio")
 
 
-leer_archivo("Alumnos.txt")
-
-
-
-
-
-
-
-
-#  a. Agregar alumnos
-def agrega_alumno():
-    """Función que agrega un alumno a un diccionario.
-    DNI, nombre, apellido y dirección"""
-    alumno = {
-        "DNI": 000,
-        "Nombre": "",
-        "Apellido": "",
-        "Domicilio": "",
-        "Materia1": "",
-        "Materia1-Notas": [],
-        "Materia1-Promedio": 0.0,
-        "Materia1-Situacion": "",
-        "Materia2": "",
-        "Materia2-Notas": [],
-        "Materia2-Promedio": 0.0,
-        "Materia2-Situacion": "",
-    }
-
-    dni = int(input("Ingresar DNI del alumno: "))
-    nombre = input("Ingresar nombre del alumno: ")
-    apellido = input("Ingresar apellido del alumno: ")
-    domicilio = input("Ingresar direccion del alumno: ")
-    # VER = alumnos[dni] = [nombre, apellido, direccion]
-    alumno["DNI"] = dni
-    alumno["Nombre"] = nombre
-    alumno["Apellido"] = apellido
-    alumno["Domicilio"] = domicilio
-    alumnos.append(alumno)
-    return alumno
-
-
-#  b. Modificar datos Personales de los alumnos
-def modifica_alumno(dni, alumnos):
-    """Función que modifica los datos de un alumno"""
-    for alumno in alumnos:
-        for valor in alumno.values():
-            if valor == dni:
-                print("\n\tModificar los datos de", alumno.get("DNI"))
-                dato = input(
-                    """Ingrese inicial de lo que desea modificar
-                N - Nombre
-                A - Apellido
-                D - Domicilio"""
-                )
-                if dato == "N":
-                    nombre = input("Ingrese el nuevo nombre: ")
-                    alumno["Nombre"] = nombre
-                elif dato == "A":
-                    apellido = input("Ingrese el nuevo apellido: ")
-                    alumno["Apellido"] = apellido
-                elif dato == "D":
-                    domicilio = input("Ingrese el nuevo domicilio:")
-                    alumno["Domicilio"] = domicilio
-                else:
-                    print("¡Esa opción no existe!")
-            return f"El alumno con DNI {dni}, fue modificado con éxito."
-
-
-#  c. Eliminar alumnos
-def elimina_alumno(dni, alumnos):
-    """Función que elimina un alumno de una lista en base a su DNI"""
-    for alumno in alumnos:  # Recorro la lista de diccionarios
-        for valor in alumno.values():  # Recorro cada diccionario por sus claves
-            if valor == dni:
-                print("Eliminando...")
-                alumnos.remove(alumno)
-                return f"El alumno con DNI {dni}, fue eliminado del registro."
-    
-
-
-#   2. Almacenar datos de la cursada de materias para cada alumno a fin de:
-#   a. Cargar materias
-def carga_materia(dni, alumnos):
-    """Función que agrega una materia nueva para un alumno"""
-    for alumno in alumnos:
-        for valor in alumno.values():
-            if valor == dni:
-                print("\n\tMaterias del alumno con DNI", alumno.get("DNI"))
-                nombre1 = input("Ingrese el nombre de la materia 1: ")
-                nombre2 = input("Ingrese el nombre de la materia 2: ")
-                alumno["Materia1"] = nombre1
-                alumno["Materia2"] = nombre2
-    return alumnos
-
-
-#   b. Cargar notas por materia
-def carga_notas(dni, alumnos):
-    """Función que carga notas por materia, en base al DNI del alumno"""
-    for alumno in alumnos:
-        for valor in alumno.values():
-            if valor == dni:
-                print("\n\tCargando notas para alumno con DNI", alumno.get("DNI"))
-                print("* Notas de", alumno.get("Materia1"))
-                materia1_nota1 = float(input("Ingresa 1ra nota: "))
-                materia1_nota2 = float(input("Ingresa 2da nota: "))
-                alumno["Materia1-Notas"] = [materia1_nota1, materia1_nota2]
-                print()
-                print("* Notas de", alumno.get("Materia2"))
-                materia2_nota1 = float(input("Ingresa 1ra nota: "))
-                materia2_nota2 = float(input("Ingresa 2da nota: "))
-                alumno["Materia2-Notas"] = [materia2_nota1, materia2_nota2]
-    return alumnos
-
-
-#   c. Modificar notas por materia
-def modifica_notas(dni, alumnos):
-    """Función que modifica las notas por materia"""
-    for alumno in alumnos:
-        for value in alumno.values():
-            if value == dni:
-                print("\n* ¿Qué materia desea modificar? Ingrese 1 ó 2")
-                print("1->", alumno.get("Materia1"))
-                print("2->", alumno.get("Materia2"))
-                numero_materia = int(input("Su elección: "))
-                if numero_materia == 1:  # Corresponde a {"Materia1-Notas" = [0.0, 0.0]}
-                    print(
-                        "¿Qué notas de la materia",
-                        alumno.get("Materia1"),
-                        "desea modificar?",
-                    )
-                    print("1-> Para 1ra nota\n2-> Para 2da nota")
-                    numero_nota = int(input("Su elección: "))
-                    if numero_nota == 1:
-                        nota1 = float(input("Ingrese la nueva nota 1: "))
-                        alumno["Materia1-Notas"][0] = nota1
-                    elif numero_nota == 2:
-                        nota2 = float(input("Ingrese la nueva nota 2: "))
-                        alumno["Materia1-Notas"][1] = nota2
-                    else:
-                        print("Número fuera de rango!")
-                elif numero_materia == 2:  # {"Materia2-Notas" = [0.0, 0.0]}
-                    print(
-                        "¿Qué notas de la materia",
-                        alumno.get("Materia2"),
-                        "desea modificar?",
-                    )
-                    print("1-> Para 1ra nota\n2-> Para 2da nota")
-                    numero_nota = int(input("Su elección: "))
-                    if numero_nota == 1:
-                        nota1 = float(input("Ingrese la nueva nota 1: "))
-                        alumno["Materia2-Notas"][0] = nota1
-                    elif numero_nota == 2:
-                        nota2 = float(input("Ingrese la nueva nota 2: "))
-                        alumno["Materia2-Notas"][1] = nota2
-                    else:
-                        print("Número fuera de rango!")
-                else:
-                    print("Número fuera de rango!")
-    return alumnos
-
-
-#   d. Calcular el promedio de notas por materia
-def calcula_promedio(alumnos):
-    """Función que calcula el promedio de las notas por materia para todos los alumnos"""
-    for alumno in alumnos:
-        for clave in alumno.keys():
-            total = 0
-            if clave == "Materia1-Promedio":
-                lista_notas1 = alumno.get("Materia1-Notas")
-                for elemento in lista_notas1:
-                    total += elemento
-                promedio1 = round(total / 2, 2)
-                alumno["Materia1-Promedio"] = promedio1
-            elif clave == "Materia2-Promedio":
-                lista_notas2 = alumno.get("Materia2-Notas")
-                for elemento in lista_notas2:
-                    total += elemento
-                promedio2 = round(total / 2, 2)
-                alumno["Materia2-Promedio"] = promedio2
-    return alumnos
-
-
-#   e. Establecer la situación del alumno por materia (Regular/ No regular)
-def situacion_alumno(alumnos):
-    """Función que determina si el alumno por el que se consulta es REGULAR o NO REGULAR"""
-    for alumno in alumnos:
-        materia1 = alumno.get("Materia1-Notas")
-        if materia1[0] < 4.0 or materia1[1] < 4.0:
-            alumno["Materia1-Situacion"] = "No Regular"
-        else:
-            alumno["Materia1-Situacion"] = "Regular"
-        materia2 = alumno.get("Materia2-Notas")
-        if materia2[0] < 4.0 or materia2[1] < 4.0:
-            alumno["Materia2-Situacion"] = "No Regular"
-        else:
-            alumno["Materia2-Situacion"] = "Regular"
-    return alumnos
-
-
 #   3. Insertar datos al archivo Alumnos.txt
-def agregar_linea(ruta, nueva_linea):
-    """Función que agrega una línea a un archivo"""
+def agregar_linea(ruta):
+    """Función que agrega líneas a un archivo"""
+    print(f"\nAGREGANDO NUEVOS DATOS AL ARCHIVO {ruta}...")
     archivo = open(ruta, "a")
-    archivo.write(nueva_linea)
+    for alumno in alumnos:
+        nueva_linea = "\t".join(map(str, alumno.values()))+"\n"
+        archivo.write(nueva_linea)
     archivo.close()
+    print("Datos agregados exitosamente al archivo", ruta)
+
 
 #    4. Modificar Datos del Archivo Alumnos.txt (datos Personales de alumnos /notas de las materias/ Situación de la materia)
-def modificar_linea(ruta, numero, nueva_linea):
-    """Función que modifica una línea de un archivo"""
-    archivo = open(ruta, "r")
-    lineas = archivo.readlines()
-    archivo.close()
-    if numero <= len(lineas) - 1:
-        lineas[numero - 1] = nueva_linea
-    else:
-        print("El número de líneas esta fuera de rango")
-    archivo = open(ruta, "w")
-    archivo.writelines(lineas)
-    archivo.close()
+def modificar_linea(ruta):
+    """Función que modifica una línea particular de un archivo"""
+    print("\n\tMODIFICAR ARCHIVO (por línea)")
+    print("Verifique qué línea desea modificar")
+    leer_archivo(ruta)
+    # Le pido al usuario el número de línea (te va a dar de 1 a N)
+    try:
+        numero = int(input("La línea N°: "))
+        archivo = open(ruta, "r")
+        # Almacena en variable "lineas" N número de líneas.
+        lineas = archivo.readlines()
+        archivo.close()
+        if numero <= len(lineas):
+            try:
+                dni = int(input("DNI N°: "))
+                nombre = input("Nombre: ")
+                apellido = input("Apellido: ")
+                domicilio = input("Domicilio: ")
+                materia1 = input("Materia 1: ")
+                materia1_nota1 = float(input("1ra nota: "))
+                materia1_nota2 = float(input("2ra nota: "))
+                materia1_promedio = round((materia1_nota1 + materia1_nota2) / 2, 2)
+                materia1_situacion = (
+                    "Regular"
+                    if materia1_nota1 >= 4 or materia1_nota2 >= 4
+                    else "No Regular"
+                )
+                materia2 = input("Materia 2: ")
+                materia2_nota1 = float(input("1ra nota: "))
+                materia2_nota2 = float(input("2ra nota: "))
+                materia2_promedio = round((materia2_nota1 + materia2_nota2) / 2, 2)
+                materia2_situacion = (
+                    "Regular"
+                    if materia2_nota1 >= 4 or materia2_nota2 >= 4
+                    else "No Regular"
+                )
+                nueva_linea = [
+                    dni,
+                    nombre,
+                    apellido,
+                    domicilio,
+                    materia1,
+                    materia1_nota1,
+                    materia1_nota2,
+                    materia1_promedio,
+                    materia1_situacion,
+                    materia2,
+                    materia2_nota1,
+                    materia2_nota2,
+                    materia2_promedio,
+                    materia2_situacion,
+                ]
+                string_linea = "\t".join(map(str, nueva_linea))+"\n" 
+                lineas[numero-1] = string_linea  
+            except ValueError:
+                print("Valor incorrecto. Verifique su ingreso.")
+        else:
+            print("El número de líneas está fuera de rango")
+        archivo = open(ruta, "w")
+        archivo.writelines(lineas)
+        archivo.close()
+    except ValueError:
+        print("Valor incorrecto. Verifique su ingreso")
+
 
 while True:
     print(
-        """Opciones: 
-    1- Agregar alumno
-    2- Modificar alumno
-    3- Eliminar alumno
-    4- Mostrar lista de alumnos
-    5- Cargar materias por alumno
-    6- Cargar notas de las materias por alumno
-    7- Modificar notas por materia
-    8- Calcular el promedio de notas por materia
-    9- Establecer la condicion de regularidad del alumno por materia
-    0- Fin"""
+        """\n
+\t ====================
+\t|| MENÚ DE OPCIONES ||
+\t ====================
+1- Área de ALUMNOS
+2- Área de ASIGNATURAS
+3- Manejo de ARCHIVOS
+4- Mostrar REGISTRO COMPLETO
+0- SALIR del programa
+    """
     )
-
-    op = input("Seleccione una opcion: ")
-    if op == "1":
-        print("\tREGISTRAR ALUMNO")
-        agrega_alumno()
-        print(alumnos)
-    elif op == "2":
-        print("\tMODIFICAR ALUMNO")
-        dni = int(input("Ingrese el dni del alumno que quiere modificar: "))
-        print(modifica_alumno(dni, alumnos))
-    elif op == "3":
-        print("\tELIMINAR ALUMNO")
-        dni = int(input("Ingrese el dni del alumno que quiere eliminar: "))
-        print(elimina_alumno(dni, alumnos))
-    elif op == "4":
-        print("\tLISTA DE ALUMNOS REGISTRADOS")
-        for elemento in alumnos:
-            print(elemento)
-    elif op == "5":
-        print("\tCARGA DE MATERIAS POR ALUMNO")
-        dni = int(input("Ingrese el DNI del alumno: "))
-        carga_materia(dni, alumnos)
-    elif op == "6":
-        print("\tCARGA DE NOTAS POR MATERIA")
-        dni = int(input("Ingrese el DNI del alumno: "))
-        carga_notas(dni, alumnos)
-    elif op == "7":
-        dni = int(input("Ingrese el DNI del alumno cuyas notas quiere modificar: "))
-        modifica_notas(dni, alumnos)
-    elif op == "8":
-        print("\tCALCULAR PROMEDIO")
-        print(calcula_promedio(alumnos))
-    elif op == "9":
-        print("\tSITUACIÓN DE LOS ALUMNOS")
-        print(situacion_alumno(alumnos))
-    elif op == "0":
+    op_menu = int(input("Su elección: "))
+    if op_menu == 1:
+        while True:
+            print(
+                """
+\t ===================
+\t|| ÁREA DE ALUMNOS ||
+\t ===================
+1- Registrar alumno
+2- Modificar alumno
+3- Eliminar alumno
+4- Mostrar listado de alumnos
+0- Salir a Menú Principal
+                """
+            )
+            op_alumno = int(input("Su elección: "))
+            if op_alumno == 1:
+                print(agrega_alumno())
+            elif op_alumno == 2:
+                print(modifica_alumno(alumnos))
+            elif op_alumno == 3:
+                print(elimina_alumno(alumnos))
+            elif op_alumno == 4:
+                mostrar_alumnos(alumnos)
+            elif op_alumno == 0:
+                break
+            else:
+                print("Opción fuera de rango.")
+    elif op_menu == 2:
+        while True:
+            print(
+                """
+\t =======================
+\t|| ÁREA DE ASIGNATURAS ||
+\t =======================
+1- Cargar materias (por alumno)
+2- Cargar notas por cada materia (por alumno)
+3- Modificar notas
+0- Salir a Menú Principal
+                """
+            )
+            op_asig = int(input("Su elección: "))
+            if op_asig == 1:
+                carga_materia(alumnos)
+                mostrar_alumnos(alumnos)
+            elif op_asig == 2:
+                carga_notas(alumnos)
+                mostrar_alumnos(alumnos)
+            elif op_asig == 3:
+                modifica_notas(alumnos)
+                mostrar_alumnos(alumnos)
+            elif op_asig == 0:
+                break
+            else:
+                print("Opción fuera de rango.")
+    elif op_menu == 3:
+        while True:
+            print(
+                """
+\t =======================
+\t|| GESTIÓN de ARCHIVOS ||
+\t =======================
+1- Ver archivo
+2- Insertar datos a un archivo
+3- Modificar datos de archivo
+0- Salir a Menú Principal
+                """
+            )
+            op_archivo = int(input("Su elección: "))
+            if op_archivo == 1:
+                leer_archivo("Alumnos.txt")
+            elif op_archivo == 2:
+                agregar_linea("Alumnos.txt")
+            elif op_archivo == 3:
+                modificar_linea("Alumnos.txt")
+            elif op_archivo == 0:
+                break
+            else:
+                print("Opción fuera de rango.")
+    elif op_menu == 4:
+        mostrar_alumnos(alumnos)
+    elif op_menu == 0:
         break
+    else:
+        print("Opción fuera de rango.")
