@@ -1,8 +1,5 @@
 # 1. Almacenar los datos de los alumnos en una estructura de datos de manera tal que permita:
-alumnos = []  # Creo una lista para agregar cada diccionario de alumnos.
-materias = {}
-notas = {}
-
+alumnos = []  # Creo una lista para agregar cada alumno (diccionario).
 
 def leer_archivo(ruta):
     """Función que lee un archivo"""
@@ -44,7 +41,7 @@ def agrega_alumno():
     """Función que agrega un alumno a un diccionario.
     DNI, nombre, apellido y dirección"""
     alumno = {
-        "DNI": 0,
+        "DNI": 000,
         "Nombre": "",
         "Apellido": "",
         "Domicilio": "",
@@ -106,7 +103,8 @@ def elimina_alumno(dni, alumnos):
             if valor == dni:
                 print("Eliminando...")
                 alumnos.remove(alumno)
-    return f"El alumno con DNI {dni}, fue eliminado del registro."
+                return f"El alumno con DNI {dni}, fue eliminado del registro."
+    
 
 
 #   2. Almacenar datos de la cursada de materias para cada alumno a fin de:
