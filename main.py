@@ -15,25 +15,10 @@ def leer_archivo(ruta):
 leer_archivo("Alumnos.txt")
 
 
-def agregar_linea(ruta, nueva_linea):
-    """Función que agrega una línea a un archivo"""
-    archivo = open(ruta, "a")
-    archivo.write(nueva_linea)
-    archivo.close()
 
 
-def modificar_linea(ruta, numero, nueva_linea):
-    """Función que modifica una línea de un archivo"""
-    archivo = open(ruta, "r")
-    lineas = archivo.readlines()
-    archivo.close()
-    if numero <= len(lineas) - 1:
-        lineas[numero - 1] = nueva_linea
-    else:
-        print("El número de líneas esta fuera de rango")
-    archivo = open(ruta, "w")
-    archivo.writelines(lineas)
-    archivo.close()
+
+
 
 
 #  a. Agregar alumnos
@@ -227,8 +212,25 @@ def situacion_alumno(alumnos):
 
 
 #   3. Insertar datos al archivo Alumnos.txt
-#    4. Modificar Datos del Archivo Alumnos.txt (datos Personales de alumnos /notas de las materias/ Situación de la materia)
+def agregar_linea(ruta, nueva_linea):
+    """Función que agrega una línea a un archivo"""
+    archivo = open(ruta, "a")
+    archivo.write(nueva_linea)
+    archivo.close()
 
+#    4. Modificar Datos del Archivo Alumnos.txt (datos Personales de alumnos /notas de las materias/ Situación de la materia)
+def modificar_linea(ruta, numero, nueva_linea):
+    """Función que modifica una línea de un archivo"""
+    archivo = open(ruta, "r")
+    lineas = archivo.readlines()
+    archivo.close()
+    if numero <= len(lineas) - 1:
+        lineas[numero - 1] = nueva_linea
+    else:
+        print("El número de líneas esta fuera de rango")
+    archivo = open(ruta, "w")
+    archivo.writelines(lineas)
+    archivo.close()
 
 while True:
     print(
