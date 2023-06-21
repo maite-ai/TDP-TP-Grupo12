@@ -1,2 +1,4 @@
 DNI	Nombre 	Apellido	Domicilio	Materia1	Materia1-Nota1	Materia1-Nota2	Materia1-Promedio	Materia1-Situacion	Materia2	Materia2-Nota2	Materia1-Nota2	Materia2-Promedio	Materia2-Situacion
-456321	Jos�	Lopez	Junion 1425	Matematica I	8	2	5	No Regular	Fundamentos BD	8	10	9	Regular
+45852	Gabriel	Garcia	Garzon 789	Calculo	8.75	9.5	9.12	Regular	Fisica I	3.6	7.5	5.55	No Regular
+34852	Maria	Rios	Rojas 888	Matematica II	8.9	9.8	9.35	Regular	Fisica I	3.5	6.5	5.0	No Regular
+33963	Azul	Cosca	Cesar 777	Administracion DB	2.55	6.9	4.72	No Regular	Logica Comp	7.0	8.0	7.5	Regular
