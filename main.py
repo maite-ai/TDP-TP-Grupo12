@@ -233,12 +233,9 @@ def modifica_notas(alumnos):
         return " **REGISTRO VACIO. Necesita agregar un alumno primero**"
     else:
         try:
-            dni_consulta = int(input("Ingrese el DNI del alumno: "))
+            dni = int(input("Ingrese el DNI del alumno: "))
             for alumno in alumnos:
-                dni = alumno.get("DNI")
-                if dni_consulta != dni:
-                    pass
-                elif dni_consulta == dni:
+                if dni in alumno.values():
                     print("\n* ¿Qué materia desea modificar? Ingrese 1 ó 2")
                     print("1 ->", alumno.get("Materia1"))
                     print("2 ->", alumno.get("Materia2"))
@@ -290,7 +287,7 @@ def modifica_notas(alumnos):
                                 input("Ingrese la nueva nota 1: ")
                             )
                         elif numero_nota == 2:
-                            alumno["Materia2-Notas"] = float(
+                            alumno["Materia2-Nota2"] = float(
                                 input("Ingrese la nueva nota 2: ")
                             )
                         else:
