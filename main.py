@@ -39,8 +39,6 @@ def mostrar_individual(dni_consulta):
         if dni_consulta != dni:
             pass
         else:
-            nombre = alumno.get("Nombre")
-            apellido = alumno.get("Apellido")
             materia1 = alumno.get("Materia1")
             m1_nota1 = alumno.get("Materia1-Nota1")
             m1_nota2 = alumno.get("Materia1-Nota2")
@@ -51,7 +49,7 @@ def mostrar_individual(dni_consulta):
             m2_nota2 = alumno.get("Materia2-Nota2")
             m2_promedio = alumno.get("Materia2-Promedio")
             m2_situacion = alumno.get("Materia2-Situacion")
-    return f"\n* Alumno DNI {dni}\n{materia1}=> 1: {m1_nota1}. 2: {m1_nota2}. Promedio: {m1_promedio}\n\tCondición: {m1_situacion}\n{materia2}=> 1: {m2_nota1}. 2: {m2_nota2}. Promedio: {m2_promedio}\n\tCondición: {m2_situacion}\n"
+    return f"\n* Alumno DNI {dni}\n{materia1}=> 1: {m1_nota1} y 2: {m1_nota2}\n\tPromedio: {m1_promedio}\n\tCondición: {m1_situacion}\n{materia2}=> 1: {m2_nota1} y 2: {m2_nota2}\n\tPromedio: {m2_promedio}\n\tCondición: {m2_situacion}\n"
 
 
 #  a. Agregar alumnos
