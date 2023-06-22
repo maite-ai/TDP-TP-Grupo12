@@ -331,7 +331,8 @@ def agregar_linea(ruta):
         for alumno in alumnos:
             nueva_linea = "\t".join(map(str, alumno.values())) + "\n"
             archivo.write(nueva_linea)
-    print("Datos agregados exitosamente al archivo", ruta)
+        print(f"Datos agregados exitosamente al archivo {ruta}")
+    return leer_archivo(ruta)
 
 
 #    4. Modificar Datos del Archivo Alumnos.txt (datos Personales de alumnos /notas de las materias/ Situación de la materia)
@@ -410,85 +411,103 @@ while True:
 0- SALIR del programa
     """
     )
-    op_menu = int(input("Su elección: "))
-    if op_menu == 1:
-        while True:
-            print(
-                """
-\t ===================
-\t|| ÁREA DE ALUMNOS ||
-\t ===================
-1- Registrar alumno
-2- Modificar alumno
-3- Eliminar alumno
-4- Mostrar listado de alumnos
-0- Salir a Menú Principal
-                """
-            )
-            op_alumno = int(input("Su elección: "))
-            if op_alumno == 1:
-                print(agrega_alumno())
-            elif op_alumno == 2:
-                print(modifica_alumno(alumnos))
-            elif op_alumno == 3:
-                print(elimina_alumno(alumnos))
-            elif op_alumno == 4:
-                mostrar_alumnos(alumnos)
-            elif op_alumno == 0:
-                break
-            else:
-                print("Opción fuera de rango.")
-    elif op_menu == 2:
-        while True:
-            print(
-                """
-\t =======================
-\t|| ÁREA DE ASIGNATURAS ||
-\t =======================
-1- Cargar materias (por alumno)
-2- Cargar notas por cada materia (por alumno)
-3- Modificar notas
-0- Salir a Menú Principal
-                """
-            )
-            op_asig = int(input("Su elección: "))
-            if op_asig == 1:
-                print(carga_materia(alumnos))
-            elif op_asig == 2:
-                print(carga_notas(alumnos))
-            elif op_asig == 3:
-                print(modifica_notas(alumnos))
-            elif op_asig == 0:
-                break
-            else:
-                print("Opción fuera de rango.")
-    elif op_menu == 3:
-        while True:
-            print(
-                """
-\t =======================
-\t|| GESTIÓN de ARCHIVOS ||
-\t =======================
-1- Ver archivo
-2- Insertar datos a un archivo
-3- Modificar datos de archivo
-0- Salir a Menú Principal
-                """
-            )
-            op_archivo = int(input("Su elección: "))
-            if op_archivo == 1:
-                leer_archivo("Alumnos.txt")
-            elif op_archivo == 2:
-                agregar_linea("Alumnos.txt")
-            elif op_archivo == 3:
-                modificar_linea("Alumnos.txt")
-            elif op_archivo == 0:
-                break
-            else:
-                print("Opción fuera de rango.")
-    elif op_menu == 4:
-        mostrar_alumnos(alumnos)
-    elif op_menu == 0:
-        break
-    else:
-        print("Opción fuera de rango.")
+    try:
+        op_menu = int(input("Su elección: "))
+        if op_menu == 1:
+            while True:
+                print(
+                    """
+    \t ===================
+    \t|| ÁREA DE ALUMNOS ||
+    \t ===================
+    1- Registrar alumno
+    2- Modificar alumno
+    3- Eliminar alumno
+    4- Mostrar listado de alumnos
+    0- Salir a Menú Principal
+                    """
+                )
+                try:
+                    op_alumno = int(input("Su elección: "))
+                    if op_alumno == 1:
+                        print(agrega_alumno())
+                    elif op_alumno == 2:
+                        print(modifica_alumno(alumnos))
+                    elif op_alumno == 3:
+                        print(elimina_alumno(alumnos))
+                    elif op_alumno == 4:
+                        mostrar_alumnos(alumnos)
+                    elif op_alumno == 0:
+                        break
+                    else:
+                        print("Opción fuera de rango.")
+                except ValueError:
+                    print("Tipo de dato no válido. Ingrese un número")
+        elif op_menu == 2:
+            while True:
+                print(
+                    """
+    \t =======================
+    \t|| ÁREA DE ASIGNATURAS ||
+    \t =======================
+    1- Cargar materias (por alumno)
+    2- Cargar notas por cada materia (por alumno)
+    3- Modificar notas
+    0- Salir a Menú Principal
+                    """
+                )
+                try:
+                    op_asig = int(input("Su elección: "))
+                    if op_asig == 1:
+                        print(carga_materia(alumnos))
+                    elif op_asig == 2:
+                        print(carga_notas(alumnos))
+                    elif op_asig == 3:
+                        print(modifica_notas(alumnos))
+                    elif op_asig == 0:
+                        break
+                    else:
+                        print("Opción fuera de rango.")
+                except ValueError:
+                    print("Tipo de dato no válido. Ingrese un número")
+        elif op_menu == 3:
+            while True:
+                print(
+                    """
+    \t =======================
+    \t|| GESTIÓN de ARCHIVOS ||
+    \t =======================
+    1- Ver archivo
+    2- Insertar datos a un archivo
+    3- Modificar datos de archivo
+    0- Salir a Menú Principal
+                    """
+                )
+                op_archivo = int(input("Su elección: "))
+                if op_archivo == 1:
+                    leer_archivo("Alumnos.txt")
+                elif op_archivo == 2:
+                    print(agregar_linea("Alumnos.txt"))
+                elif op_archivo == 3:
+                    modificar_linea("Alumnos.txt")
+                elif op_archivo == 0:
+                    break
+                else:
+                    print("Opción fuera de rango.")
+        elif op_menu == 4:
+            mostrar_alumnos(alumnos)
+        elif op_menu == 0:
+            break
+        else:
+            print("Opción fuera de rango.")
+    except ValueError:
+        print("Tipo de dato no válido. Ingrese un número.")
+print(
+    """
+                    *******************************
+                              HECHO POR: 
+                      - Azul Coscarelli Risdon
+                      - María Fernanda Ríos
+                    *******************************
+      """
+)
