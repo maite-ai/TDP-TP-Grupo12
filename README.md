@@ -1,4 +1,4 @@
-# Grupo AzuMa
+# Grupo 12
 
 ## Consideraciones iniciales
 Dado el archivo de texto Alumnos.txt (adjunto a este TP) desarrollar un programa en Python que permita la gestión de los alumnos y las materias que cursan dichos alumnos empleando:
